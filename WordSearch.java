@@ -8,6 +8,7 @@ public class WordSearch{
      */
     public WordSearch(int rows,int cols){
       data = new char[rows][cols];
+      clear ();
     }
 
     /**Set all values in the WordSearch to underscores'_'*/
@@ -27,7 +28,7 @@ public class WordSearch{
       String ans = "";
       for (int x = 0; x < data.length; x ++ ) {
         for (int y = 0; y < data[x].length; y ++) {
-          if (y != data[x].length -1) {
+          if (y != data[x].length - 1) {
             ans += data[x][y] + " ";
           }
           else {
@@ -51,14 +52,18 @@ public class WordSearch{
      * and the board is NOT modified.
      */
     public boolean addWordHorizontal(String word,int row, int col){
-      if (col + word.length () > data[row].length - 1) {
+      if (col + word.length () - 1> data[row].length - 1) {
         return false;
       }
-      int count = 0;
-      for (int x = row; x < word.length (); x ++) {
-        for (int y = col; y < word.length (); y ++) {
-          data[x][y] = word.charAt (0);
-        }
+      if (data[row][col] != '_' && data[row][col] != word.charAt (0)) {
+        return false;
+      }
+      int y = col;
+      int i = 0;
+      while (i < word.length ()) {
+        data [row][y] = word.charAt (i);
+        y += 1;
+        i += 1;
       }
       return true;
     }
@@ -78,6 +83,9 @@ public class WordSearch{
       if (row + word.length () > data.length - 1) {
         return false;
       }
+      if (data[row][col] != '_' && data[row][col] != word.charAt (0)) {
+        return false;
+      }
       int x = row;
       int i = 0;
       while (i < word.length ()) {
@@ -87,4 +95,18 @@ public class WordSearch{
       }
       return true;
     }
+
+      /**Attempts to add a given word to the specified position of the WordGrid.
+    *The word is added from top left to bottom right, must fit on the WordGrid,
+    *and must have a corresponding letter to match any letters that it overlaps.
+    *
+    *@param word is any text to be added to the word grid.
+    *@param row is the vertical locaiton of where you want the word to start.
+    *@param col is the horizontal location of where you want the word to start.
+    *@return true when the word is added successfully. When the word doesn't fit,
+    *or there are overlapping letters that do not match, then false is returned.
+    */
+   public boolean addWordDiagonal(String word,int row, int col){
+     return true;
+   }
 }
