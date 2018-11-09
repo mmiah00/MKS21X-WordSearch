@@ -1,6 +1,7 @@
 import java.util.*; //random, scanner, arraylist
 import java.io.*; //file, filenotfoundexception
 public class WordSearch{
+// write word.txt with a list of words  
     private char[][]data;
 
     //the random seed used to produce this WordSearch
