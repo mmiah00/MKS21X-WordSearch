@@ -1,5 +1,19 @@
+import java.util.*; //random, scanner, arraylist
+import java.io.*; //file, filenotfoundexception
 public class WordSearch{
     private char[][]data;
+
+    //the random seed used to produce this WordSearch
+    private int seed;
+
+    //a random Object to unify your random calls
+    private Random randgen;
+
+    //all words from a text file get added to wordsToAdd, indicating that they have not yet been added
+    private ArrayList<String>wordsToAdd;
+
+    //all words that were successfully added get moved into wordsAdded.
+    private ArrayList<String>wordsAdded;
 
     /**Initialize the grid to the size specified
      *and fill all of the positions with '_'
@@ -143,7 +157,7 @@ public class WordSearch{
    int x = col;
    int y = row;
    if (rowIncrement == 0 && colIncrement == 0) {
-     return false; 
+     return false;
    }
    if (x + word.length () - 1 > data[row].length || y + word.length () - 1 > data.length) {
      return false;
