@@ -142,6 +142,9 @@ public class WordSearch{
  public boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
    int x = col;
    int y = row;
+   if (rowIncrement == 0 && colIncrement == 0) {
+     return false; 
+   }
    if (x + word.length () - 1 > data[row].length || y + word.length () - 1 > data.length) {
      return false;
    }
