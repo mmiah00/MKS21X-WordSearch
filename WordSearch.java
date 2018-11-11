@@ -1,29 +1,38 @@
 import java.util.*; //random, scanner, arraylist
 import java.io.*; //file, filenotfoundexception
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 public class WordSearch{
-// write word.txt with a list of words  
-    private char[][]data;
+    private char[][]data;       // write word.txt with a list of words
+    private int seed;           //the random seed used to produce this WordSearch
+    private Random randgen;     //a random Object to unify your random calls
+    private ArrayList<String>wordsToAdd; //all words from a text file get added to wordsToAdd, indicating that they have not yet been added
+    private ArrayList<String>wordsAdded; //all words that were successfully added get moved into wordsAdded.
 
-    //the random seed used to produce this WordSearch
-    private int seed;
+    public WordSearch (int rows, int cols, String fileName) {
+      data = new char [rows][cols];
+      String words = "words.txt";
+      //File f = new File (fileName);
+      
+      Scanner in = new Scanner (f);
+      while (in.hasNext ()) {
+        String word = in.next ();
+        wordsToAdd.add (word);
+      }
+      randgen = new Random ();
+    }
 
-    //a random Object to unify your random calls
-    private Random randgen;
-
-    //all words from a text file get added to wordsToAdd, indicating that they have not yet been added
-    private ArrayList<String>wordsToAdd;
-
-    //all words that were successfully added get moved into wordsAdded.
-    private ArrayList<String>wordsAdded;
-
-    /**Initialize the grid to the size specified
-     *and fill all of the positions with '_'
-     *@param row is the starting height of the WordSearch
-     *@param col is the starting width of the WordSearch
-     */
-    public WordSearch(int rows,int cols){
-      data = new char[rows][cols];
-      clear ();
+    public WordSearch (int rows, int cols, String fileName, int randSeed) {
+      data = new char [rows][cols];
+      String words = "words.txt";
+      File f = new File (fileName);
+      Scanner in = new Scanner (f);
+      while (in.hasNext ()) {
+        String word = in.next ();
+        wordsToAdd.add (word);
+      }
+      randgen = new Random (randSeed);
     }
 
     /**Set all values in the WordSearch to underscores'_'*/
@@ -43,11 +52,14 @@ public class WordSearch{
       String ans = "";
       for (int x = 0; x < data.length; x ++ ) {
         for (int y = 0; y < data[x].length; y ++) {
+          if (y == 0) {
+            ans += "| ";
+          }
           if (y != data[x].length - 1) {
             ans += data[x][y] + " ";
           }
           else {
-            ans += data [x][y] + "\n";
+            ans += data [x][y] + "| \n";
           }
         }
       }
@@ -171,8 +183,8 @@ public class WordSearch{
      index += 1;
    }
    return true;
-   }
- }
+  }
+}
 
  /*[rowIncrement,colIncrement] examples:
 
@@ -180,4 +192,3 @@ public class WordSearch{
 
   *[1,0] would add to the right because (row+1), with no col change
   */
-}
