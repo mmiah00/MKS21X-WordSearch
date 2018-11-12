@@ -1,6 +1,7 @@
 import java.util.*; //random, scanner, arraylist
 import java.io.*; //file, filenotfoundexception
 import java.io.File;
+import java.lang.Math.*;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -57,7 +58,6 @@ public class WordSearch{
      *separated by newlines.
      */
     public String toString(){
-      //addAllWords ();
       String ans = "";
       for (int x = 0; x < data.length; x ++ ) {
         for (int y = 0; y < data[x].length; y ++) {
@@ -74,9 +74,11 @@ public class WordSearch{
 
       ans += "Words: ";
       for (int x = 0; x < wordsAdded.size (); x ++) {
-        ans += wordsAdded.get (x) + " ";
         if (x == wordsAdded.size () - 1) {
-          ans += "(seed: " + seed + ")";
+          ans += wordsAdded.get (x) + " (seed: " + seed + ")";
+        }
+        else {
+          ans += wordsAdded.get (x) + ", ";
         }
       }
       return ans;
@@ -86,14 +88,17 @@ public class WordSearch{
     private boolean fits (String word, int r, int c, int rowIncrement, int colIncrement) {
        if ( (rowIncrement & colIncrement) == 0) return false;
        if ( r >= data.length || c >= data[0].length || r < 0 || c < 0) return false;
-       if (r + rowIncrement * word.length () > data.length - 1)  return false;
-       if (c + colIncrement * word.length () > data[r].length - 1)  return false;
-       int x = r;
-       int y = c;
-       for (int i = 0; i < word.length (); i ++) {
-         if (data[x][y] != word.charAt (i) && data[x][y] != '_') {
+       if (r + rowIncrement * word.length () > data.length - 1 || r + rowIncrement * word.length () < 0 )  return false;
+       if (c + colIncrement * word.length () > data[r].length - 1 || c + colIncrement * word.length () < 0)  return false;
+       int x = c;
+       int y = r;
+       for (int i = 0; i < word.length () ; i ++ ) {
+         char l = word.charAt (i);
+         if (data[x][y] != l && data[x][y] != '_') {
            return false;
          }
+         x += colIncrement;
+         y += rowIncrement;
        }
        return true;
     }
@@ -136,18 +141,18 @@ public class WordSearch{
 
 
     private void addAllWords () {
-      int rowInc = (randgen.nextInt (3)) - 1;
-      int colInc = (randgen.nextInt (3)) - 1;
+      int randRow = Math.abs (randgen.nextInt () % data.length);
+      int randCol = Math.abs (randgen.nextInt () % data[0].length);
       int fails = 0;
       int i = 0;
       while (fails < 10000 && wordsToAdd.size () > 0) {
-        int randRow = Math.abs (randgen.nextInt () % data.length);
-        int randCol = Math.abs (randgen.nextInt () % data[0].length);
+        int rowInc = (randgen.nextInt (3)) - 1;
+        int colInc = (randgen.nextInt (3)) - 1;
         String now = wordsToAdd.get (i);
         if (now.length () == 0) {
           i += 1;
         }
-        if (! (addWord (now, randRow, randCol, rowInc, colInc))) {
+        if (! (fits (now, randRow, randCol, rowInc, colInc))) {
           fails += 1;
         }
         else {
@@ -318,7 +323,7 @@ public class WordSearch{
   //**********************************************************************************************************************\\
   public static void main(String[] args) {
     try {
-      WordSearch test = new WordSearch (20, 20 ,"words.txt");
+      WordSearch test = new WordSearch (10, 10 ,"words.txt");
       System.out.println (test.toString());
     }
     catch (FileNotFoundException e) {
