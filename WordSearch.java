@@ -27,6 +27,7 @@ public class WordSearch{
         wordsToAdd.add (word);
       }
       addAllWords ();
+      addRandomLetters ();
     }
 
     public WordSearch (int rows, int cols, String filename, int randSeed) throws FileNotFoundException {
@@ -52,6 +53,22 @@ public class WordSearch{
         }
       }
     }
+
+    private void addRandomLetters() {
+      char [] a = new char[26];
+      for (int x = 0; x < 26; x ++ ) {
+        a [x] = (char) ('a' + x); 
+      }
+
+      for (int x = 0; x < data.length; x++) {
+        for (int y = 0; y < data[x].length; y++) {
+          if (data[x][y] == '_') {
+            int z = (randgen.nextInt(26));
+            data[x][y] = a[z];
+          }
+        }
+      }
+      }
 
     /**Each row is a new line, there is a space between each letter
      *@return a String with each character separated by spaces, and rows
@@ -332,12 +349,12 @@ public class WordSearch{
         test = new WordSearch (Integer.parseInt (args [0]), Integer.parseInt (args [1]), args [2], Integer.parseInt (args [3]));
         System.out.println (test);
       }
+      if (args.length < 3) {
+        System.out.println ("Add parameters. They should include:  \n\t ~Number of Rows \n\t ~Number of Columns \n\t ~Filename \n\t ~seed [OPTIONAL]");
+      }
     }
     catch (FileNotFoundException e) {
       System.out.println ("File " + args[2] + " not found");
-    }
-    catch (Exception e) {
-      System.out.println ("Check your parameters. They should include:  \n\t ~Number of Rows \n\t ~Number of Columns \n\t ~Filename \n\t ~seed [OPTIONAL]");
     }
     /*
     try {
