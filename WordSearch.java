@@ -25,7 +25,7 @@ public class WordSearch{
         String word = in.next ();
         wordsToAdd.add (word);
       }
-      //addAllWords ();
+      addAllWords ();
     }
 
     public WordSearch (int rows, int cols, String filename, int randSeed) throws FileNotFoundException {
@@ -41,7 +41,7 @@ public class WordSearch{
         String word = in.next ();
         wordsToAdd.add (word);
       }
-      //addAllWords ();
+      addAllWords ();
     }
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
@@ -57,17 +57,16 @@ public class WordSearch{
      *separated by newlines.
      */
     public String toString(){
+      //addAllWords ();
       String ans = "";
       for (int x = 0; x < data.length; x ++ ) {
         for (int y = 0; y < data[x].length; y ++) {
           if (y == 0) {
             ans += "| ";
           }
-          if (y != data[x].length - 1) {
-            ans += data[x][y] + " ";
-          }
-          else {
-            ans += data [x][y] + "| \n";
+          ans += data[x][y] + " ";
+          if (y == data[x].length - 1) {
+            ans += " | \n";
           }
         }
       }
@@ -75,16 +74,18 @@ public class WordSearch{
 
       ans += "Words: ";
       for (int x = 0; x < wordsAdded.size (); x ++) {
-        if (x == wordsAdded.size () - 1) {
-          ans += wordsAdded.get (x) + "(seed: " + seed + ")";
-        }
         ans += wordsAdded.get (x) + " ";
+        if (x == wordsAdded.size () - 1) {
+          ans += "(seed: " + seed + ")";
+        }
       }
       return ans;
     }
 
+
     private boolean fits (String word, int r, int c, int rowIncrement, int colIncrement) {
        if ( (rowIncrement & colIncrement) == 0) return false;
+       if ( r >= data.length || c >= data[0].length || r < 0 || c < 0) return false;
        if (r + rowIncrement * word.length () > data.length - 1)  return false;
        if (c + colIncrement * word.length () > data[r].length - 1)  return false;
        int x = r;
@@ -96,6 +97,8 @@ public class WordSearch{
        }
        return true;
     }
+
+
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added in the direction rowIncrement,colIncrement
      *Words must have a corresponding letter to match any letters that it overlaps.
@@ -114,6 +117,7 @@ public class WordSearch{
       *[ 1,0] would add downwards because (row+1), with no col change
       *[ 0,-1] would add towards the left because (col - 1), with no row change
       */
+
     private boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
       if (fits (word, row, col, rowIncrement, colIncrement)) {
         int index = 0;
@@ -131,13 +135,29 @@ public class WordSearch{
     }
 
     private void addAllWords () {
-      int randRow = Math.abs (randgen.nextInt () % data[0].length);
-      int randCol = Math.abs (randgen.nextInt () % data.length);
-      int rowInc = (randgen.nextInt (2)) - 1;
-      int colInc = (randgen.nextInt (2)) - 1;
-      int successes = 0;
+      int randRow = Math.abs (randgen.nextInt () % data.length);
+      int randCol = Math.abs (randgen.nextInt () % data[0].length);
+      int rowInc = (randgen.nextInt (3)) - 1;
+      int colInc = (randgen.nextInt (3)) - 1;
       int fails = 0;
-      while (fails < 1000) { 
+      int i = 0;
+      while (fails < 1000) {
+        String now = wordsToAdd.get (i);
+        if (now.length () == 0) {
+          i += 1;
+        }
+        if (! (addWord (now, randRow, randCol, rowInc, colInc))) {
+          fails += 1;
+        }
+        else {
+          addWord (now,randRow, randCol, rowInc, colInc);
+          wordsAdded.add (now);
+          wordsToAdd.remove (0);
+          i += 1;
+        }
+      }
+      /*
+      while (fails < 1000) {
         for (int x = 0; x < wordsToAdd.size (); x ++ ) {
           String now = wordsToAdd.get (x);
           if (! (addWord (now, randRow, randCol, rowInc, colInc))) {
@@ -149,8 +169,8 @@ public class WordSearch{
           }
         }
       }
+      */
     }
-
 
 
 
@@ -171,7 +191,6 @@ public class WordSearch{
      * and the board is NOT modified.
      */
 
-    /*
     public boolean addWordHorizontal(String word,int row, int col){
       if (col + word.length () - 1> data[row].length - 1) {
         return false;
@@ -188,7 +207,7 @@ public class WordSearch{
       }
       return true;
     }
-    */
+
 
    /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from top to bottom, must fit on the WordGrid, and must
@@ -202,7 +221,7 @@ public class WordSearch{
      *and the board is NOT modified.
      */
 
-    /*
+
     public boolean addWordVertical(String word,int row, int col){
       if (row + word.length () > data.length - 1) {
         return false;
@@ -219,7 +238,7 @@ public class WordSearch{
       }
       return true;
     }
-    */
+
 
     /**Attempts to add a given word to the specified position of the WordGrid.
       *The word is added from top left to bottom right, must fit on the WordGrid,
@@ -232,7 +251,7 @@ public class WordSearch{
       *or there are overlapping letters that do not match, then false is returned.
       */
 
-  /*
+
    public boolean addWordDiagonal(String word,int row, int col){
      int x = col;
      int y = row;
@@ -248,8 +267,8 @@ public class WordSearch{
      }
      return true;
    }
-   */
 
+   
    //**********************************************************************************************************************\\
 
    /**Attempts to add a given word to the specified position of the WordGrid.
@@ -296,4 +315,17 @@ public class WordSearch{
   }
   */
   //**********************************************************************************************************************\\
+  public static void main (String [] args) {
+    try {
+      WordSearch test = new WordSearch (20,20, "words.txt");
+      System.out.println (test.toString ());
+    }
+    catch (FileNotFoundException e) {
+      System.out.println ("File not found");
+    }
+    catch (IndexOutOfBoundsException e) {
+      System.out.println ("Check file/word length");
+    }
+  }
+
 }
