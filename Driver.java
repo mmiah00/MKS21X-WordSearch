@@ -1,6 +1,19 @@
+import java.util.*; //random, scanner, arraylist
+import java.io.*; //file, filenotfoundexception
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 public class Driver{
-	public static void main(String[] args){
-		WordSearch one = new WordSearch(10,10);
+	public static void main(String[] args) {
+		WordSearch one;
+		try {
+			one = new WordSearch (10,10, "words.txt");
+			System.out.println (one.toString ());
+		}
+		catch (FileNotFoundException e){
+			 System.out.println ("File not Found");
+		}
+		/*
 		System.out.println("Initializing a 11 by 11, WordSearch");
 		System.out.println("Should print out a 10 X 10 array of underscores: ");
 		System.out.println(one);
@@ -49,5 +62,6 @@ public class Driver{
 		System.out.println ("********************************\nAdding Diagonal");
 		System.out.println ("Should print true: " + one.addWordDiagonal ("yes", 0, 0));
 		System.out.println (one);
+		*/
 	}
 }

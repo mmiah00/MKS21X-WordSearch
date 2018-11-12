@@ -39,7 +39,7 @@ public class WordSearch{
         String word = in.next ();
         wordsToAdd.add (word);
       }
-      //addAllWords (); 
+      //addAllWords ();
     }
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
@@ -68,6 +68,15 @@ public class WordSearch{
             ans += data [x][y] + "| \n";
           }
         }
+      }
+      // ^^ makes the WordGrid
+
+      ans += "Words: ";
+      for (int x = 0; x < wordsAdded.size (); x ++) {
+        if (x == wordsAdded.size () - 1) {
+          ans += wordsAdded.get (x) + "(seed: " + seed + ")";
+        }
+        ans += wordsAdded.get (x) + " ";
       }
       return ans;
     }
