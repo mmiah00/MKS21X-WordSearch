@@ -141,17 +141,17 @@ public class WordSearch{
 
 
     private void addAllWords () {
-      int randRow = Math.abs (randgen.nextInt () % data.length);
-      int randCol = Math.abs (randgen.nextInt () % data[0].length);
       int fails = 0;
       int i = 0;
       while (fails < 10000 && wordsToAdd.size () > 0) {
-        int rowInc = (randgen.nextInt (3)) - 1;
-        int colInc = (randgen.nextInt (3)) - 1;
         String now = wordsToAdd.get (i);
         if (now.length () == 0) {
           i += 1;
         }
+        int randRow = Math.abs (randgen.nextInt () % data.length);
+        int randCol = Math.abs (randgen.nextInt () % data[0].length);
+        int rowInc = (randgen.nextInt (3)) - 1;
+        int colInc = (randgen.nextInt (3)) - 1;
         if (! (fits (now, randRow, randCol, rowInc, colInc))) {
           fails += 1;
         }
@@ -323,7 +323,7 @@ public class WordSearch{
   //**********************************************************************************************************************\\
   public static void main(String[] args) {
     try {
-      WordSearch test = new WordSearch (10, 10 ,"words.txt");
+      WordSearch test = new WordSearch (20, 20 ,"words.txt");
       System.out.println (test.toString());
     }
     catch (FileNotFoundException e) {
