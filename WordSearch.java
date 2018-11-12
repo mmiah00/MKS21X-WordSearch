@@ -3,6 +3,7 @@ import java.io.*; //file, filenotfoundexception
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
 public class WordSearch{
     private char[][]data;       // write word.txt with a list of words
     private int seed;           //the random seed used to produce this WordSearch
@@ -31,6 +32,7 @@ public class WordSearch{
       data = new char [rows][cols];
       clear ();
       seed = randSeed;
+      randgen = new Random (seed);
       wordsToAdd = new ArrayList<String> ();
       wordsAdded = new ArrayList<String> ();
       File f = new File (filename);
@@ -82,7 +84,7 @@ public class WordSearch{
     }
 
     private boolean fits (String word, int r, int c, int rowIncrement, int colIncrement) {
-       if (rowIncrement == 0 && colIncrement == 0) return false;
+       if ( (rowIncrement & colIncrement) == 0) return false;
        if (r + rowIncrement * word.length () > data.length - 1)  return false;
        if (c + colIncrement * word.length () > data[r].length - 1)  return false;
        int x = r;
@@ -129,9 +131,24 @@ public class WordSearch{
     }
 
     private void addAllWords () {
-      int rowIncrement = (randgen.nextInt (3)) - 1;
-      int colIncrement = (randgen.nextInt (3)) - 1;
-
+      int randRow = Math.abs (randgen.nextInt () % data[0].length);
+      int randCol = Math.abs (randgen.nextInt () % data.length);
+      int rowInc = (randgen.nextInt (2)) - 1;
+      int colInc = (randgen.nextInt (2)) - 1;
+      int successes = 0;
+      int fails = 0;
+      while (fails < 1000) { 
+        for (int x = 0; x < wordsToAdd.size (); x ++ ) {
+          String now = wordsToAdd.get (x);
+          if (! (addWord (now, randRow, randCol, rowInc, colInc))) {
+            fails += 1;
+          }
+          else {
+            addWord (now,randRow, randCol, rowInc, colInc);
+            wordsAdded.add (now);
+          }
+        }
+      }
     }
 
 
