@@ -322,16 +322,30 @@ public class WordSearch{
   */
   //**********************************************************************************************************************\\
   public static void main(String[] args) {
+    WordSearch test;
     try {
-      WordSearch test = new WordSearch (20, 20 ,"words.txt");
+      if (args.length == 3) {
+        test = new WordSearch (Integer.parseInt (args [0]), Integer.parseInt (args [1]), args [2]);
+        System.out.println (test);
+      }
+      if (args.length == 4) {
+        test = new WordSearch (Integer.parseInt (args [0]), Integer.parseInt (args [1]), args [2], Integer.parseInt (args [3]));
+        System.out.println (test);
+      }
+    }
+    catch (FileNotFoundException e) {
+      System.out.println ("File " + args[2] + " not found");
+    }
+    catch (Exception e) {
+      System.out.println ("Check your parameters. They should include:  \n\t ~Number of Rows \n\t ~Number of Columns \n\t ~Filename \n\t ~seed [OPTIONAL]");
+    }
+    /*
+    try {
+      WordSearch test = new WordSearch (10, 10 ,"words.txt");
       System.out.println (test.toString());
     }
     catch (FileNotFoundException e) {
       System.out.println ("File not found");
-    }
-    /*
-    catch (IndexOutOfBoundsException e) {
-      System.out.println ("Index out of bounds. Check size of word/file");
     }
     */
   }
