@@ -10,31 +10,37 @@ public class WordSearch{
     private ArrayList<String>wordsToAdd; //all words from a text file get added to wordsToAdd, indicating that they have not yet been added
     private ArrayList<String>wordsAdded; //all words that were successfully added get moved into wordsAdded.
 
-    public WordSearch (int rows, int cols, String fileName) {
+    public WordSearch (int rows, int cols, String fileName) throws FileNotFoundException {
       data = new char [rows][cols];
-      String words = "words.txt";
-      //File f = new File (fileName);
-      
-      Scanner in = new Scanner (f);
-      while (in.hasNext ()) {
-        String word = in.next ();
-        wordsToAdd.add (word);
-      }
-      randgen = new Random ();
-    }
-
-    public WordSearch (int rows, int cols, String fileName, int randSeed) {
-      data = new char [rows][cols];
-      String words = "words.txt";
+      clear ();
+      Random r = new Random ();
+      seed = r.nextInt () % 1000;
+      randgen = new Random (seed);
+      wordsToAdd = new ArrayList<String> ();
+      wordsAdded = new ArrayList<String> ();
       File f = new File (fileName);
       Scanner in = new Scanner (f);
       while (in.hasNext ()) {
         String word = in.next ();
         wordsToAdd.add (word);
       }
-      randgen = new Random (randSeed);
+      //addAllWords ();
     }
 
+    public WordSearch (int rows, int cols, String filename, int randSeed) throws FileNotFoundException {
+      data = new char [rows][cols];
+      clear ();
+      seed = randSeed;
+      wordsToAdd = new ArrayList<String> ();
+      wordsAdded = new ArrayList<String> ();
+      File f = new File (filename);
+      Scanner in = new Scanner (f);
+      while (in.hasNext ()) {
+        String word = in.next ();
+        wordsToAdd.add (word);
+      }
+      //addAllWords (); 
+    }
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
       for (int x = 0; x < data.length; x ++) {
