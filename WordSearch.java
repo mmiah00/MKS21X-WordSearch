@@ -135,13 +135,13 @@ public class WordSearch{
     }
 
     private void addAllWords () {
-      int randRow = Math.abs (randgen.nextInt () % data.length);
-      int randCol = Math.abs (randgen.nextInt () % data[0].length);
-      int rowInc = (randgen.nextInt (3)) - 1;
-      int colInc = (randgen.nextInt (3)) - 1;
+      int randRow = Math.abs (randgen.nextInt () % data[0].length);
+      int randCol = Math.abs (randgen.nextInt () % data.length);
+      int rowInc = (randgen.nextInt (2)) - 1;
+      int colInc = (randgen.nextInt (2)) - 1;
       int fails = 0;
       int i = 0;
-      while (fails < 1000) {
+      while (fails < 1000000) {
         String now = wordsToAdd.get (i);
         if (now.length () == 0) {
           i += 1;
@@ -151,8 +151,8 @@ public class WordSearch{
         }
         else {
           addWord (now,randRow, randCol, rowInc, colInc);
-          wordsAdded.add (now);
           wordsToAdd.remove (0);
+          wordsAdded.add (now);
           i += 1;
         }
       }
@@ -177,7 +177,7 @@ public class WordSearch{
 
 
 
-    //***********************************************************************************************************\\`
+    //****************************************NOT USED BUT JUST KEEPING IT IN CASE ************************************************\\`
 
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from left to right, must fit on the WordGrid, and must
@@ -268,8 +268,7 @@ public class WordSearch{
      return true;
    }
 
-   
-   //**********************************************************************************************************************\\
+   //****************************************NOT USED BUT JUST KEEPING IT IN CASE ************************************************\\`
 
    /**Attempts to add a given word to the specified position of the WordGrid.
   *The word is added in the direction rowIncrement,colIncrement
@@ -315,16 +314,19 @@ public class WordSearch{
   }
   */
   //**********************************************************************************************************************\\
-  public static void main (String [] args) {
+  public static void main(String[] args) {
+    WordSearch test;
     try {
-      WordSearch test = new WordSearch (20,20, "words.txt");
-      System.out.println (test.toString ());
+      if (args.length == 4) {
+        test = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
+      }
+      else {
+        test = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2]);
+      }
+      System.out.println(test);
     }
-    catch (FileNotFoundException e) {
-      System.out.println ("File not found");
-    }
-    catch (IndexOutOfBoundsException e) {
-      System.out.println ("Check file/word length");
+    catch (Exception e) {
+      System.out.println("Please enter information in the following format: \n\t*Number of rows (at least 1) \n \t*Number of columns (at least 1) \n \t*File name (themes include: food, animals, candy) \n To view the solution, enter a specific puzzle ID/seed");
     }
   }
 
