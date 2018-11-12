@@ -81,6 +81,19 @@ public class WordSearch{
       return ans;
     }
 
+    private boolean fits (String word, int r, int c, int rowIncrement, int colIncrement) {
+       if (rowIncrement == 0 && colIncrement == 0) return false;
+       if (r + rowIncrement * word.length () > data.length - 1)  return false;
+       if (c + colIncrement * word.length () > data[r].length - 1)  return false;
+       int x = r;
+       int y = c;
+       for (int i = 0; i < word.length (); i ++) {
+         if (data[x][y] != word.charAt (i) && data[x][y] != '_') {
+           return false;
+         }
+       }
+       return true;
+    }
     /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added in the direction rowIncrement,colIncrement
      *Words must have a corresponding letter to match any letters that it overlaps.
@@ -94,28 +107,32 @@ public class WordSearch{
      *        false when: the word doesn't fit, OR  rowchange and colchange are both 0,
      *        OR there are overlapping letters that do not match
      */
+     /*[rowIncrement,colIncrement] examples:
+      *[-1,1] would add up and the right because (row -1 each time, col + 1 each time)
+      *[ 1,0] would add downwards because (row+1), with no col change
+      *[ 0,-1] would add towards the left because (col - 1), with no row change
+      */
     private boolean addWord(String word,int row, int col, int rowIncrement, int colIncrement){
-      if (rowIncrement == 0 && colIncrement == 0) { return false;}
-      if (row + rowIncrement * word.length () > data.length - 1) { return false;}
-      if (col + colIncrement * word.length () > data[row].length - 1) { return false;}
-      int index = 0;
-      int x = col;
-      int y = row;
-      while (index < word.length ()) {
-        data[y][x] = word.charAt (index);
-        x += colIncrement;
-        y += rowIncrement;
-        index += 1;
+      if (fits (word, row, col, rowIncrement, colIncrement)) {
+        int index = 0;
+        int x = col;
+        int y = row;
+        while (index < word.length ()) {
+          data[y][x] = word.charAt (index);
+          x += colIncrement;
+          y += rowIncrement;
+          index += 1;
+        }
+        return true;
       }
-      return true;
+      else { return false;}
     }
 
-    /*[rowIncrement,colIncrement] examples:
-     *[-1,1] would add up and the right because (row -1 each time, col + 1 each time)
-     *[ 1,0] would add downwards because (row+1), with no col change
-     *[ 0,-1] would add towards the left because (col - 1), with no row change
-     */
+    private void addAllWords () {
+      int rowIncrement = (randgen.nextInt (3)) - 1;
+      int colIncrement = (randgen.nextInt (3)) - 1;
 
+    }
 
 
 
