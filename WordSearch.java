@@ -134,14 +134,15 @@ public class WordSearch{
       else { return false;}
     }
 
+
     private void addAllWords () {
-      int randRow = Math.abs (randgen.nextInt () % data[0].length);
-      int randCol = Math.abs (randgen.nextInt () % data.length);
-      int rowInc = (randgen.nextInt (2)) - 1;
-      int colInc = (randgen.nextInt (2)) - 1;
+      int rowInc = (randgen.nextInt (3)) - 1;
+      int colInc = (randgen.nextInt (3)) - 1;
       int fails = 0;
       int i = 0;
-      while (fails < 1000000) {
+      while (fails < 10000 && wordsToAdd.size () > 0) {
+        int randRow = Math.abs (randgen.nextInt () % data.length);
+        int randCol = Math.abs (randgen.nextInt () % data[0].length);
         String now = wordsToAdd.get (i);
         if (now.length () == 0) {
           i += 1;
@@ -153,7 +154,7 @@ public class WordSearch{
           addWord (now,randRow, randCol, rowInc, colInc);
           wordsToAdd.remove (0);
           wordsAdded.add (now);
-          i += 1;
+          //i += 1;
         }
       }
       /*
@@ -171,6 +172,7 @@ public class WordSearch{
       }
       */
     }
+
 
 
 
@@ -315,19 +317,18 @@ public class WordSearch{
   */
   //**********************************************************************************************************************\\
   public static void main(String[] args) {
-    WordSearch test;
     try {
-      if (args.length == 4) {
-        test = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]));
-      }
-      else {
-        test = new WordSearch(Integer.parseInt(args[0]), Integer.parseInt(args[1]), args[2]);
-      }
-      System.out.println(test);
+      WordSearch test = new WordSearch (20, 20 ,"words.txt");
+      System.out.println (test.toString());
     }
-    catch (Exception e) {
-      System.out.println("Please enter information in the following format: \n\t*Number of rows (at least 1) \n \t*Number of columns (at least 1) \n \t*File name (themes include: food, animals, candy) \n To view the solution, enter a specific puzzle ID/seed");
+    catch (FileNotFoundException e) {
+      System.out.println ("File not found");
     }
+    /*
+    catch (IndexOutOfBoundsException e) {
+      System.out.println ("Index out of bounds. Check size of word/file");
+    }
+    */
   }
 
 }
