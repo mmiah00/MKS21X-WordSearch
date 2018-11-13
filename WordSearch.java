@@ -57,7 +57,7 @@ public class WordSearch{
     private void addRandomLetters() {
       char [] a = new char[26];
       for (int x = 0; x < 26; x ++ ) {
-        a [x] = (char) ('a' + x); 
+        a [x] = (char) ('a' + x);
       }
 
       for (int x = 0; x < data.length; x++) {
@@ -111,7 +111,7 @@ public class WordSearch{
        int y = r;
        for (int i = 0; i < word.length () ; i ++ ) {
          char l = word.charAt (i);
-         if (data[x][y] != l && data[x][y] != '_') {
+         if (data[y][x] != l && data[y][x] != '_') {
            return false;
          }
          x += colIncrement;
