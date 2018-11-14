@@ -32,7 +32,7 @@ public class WordSearch{
 
     public WordSearch (int rows, int cols, String filename, int randSeed) throws FileNotFoundException {
       data = new char [rows][cols];
-      clear ();
+      //clear ();
       seed = randSeed;
       randgen = new Random (seed);
       wordsToAdd = new ArrayList<String> ();
@@ -57,7 +57,7 @@ public class WordSearch{
     private void addRandomLetters() {
       char [] a = new char[26];
       for (int x = 0; x < 26; x ++ ) {
-        a [x] = (char) ('a' + x);
+        a [x] = (char) ('A' + x);
       }
 
       for (int x = 0; x < data.length; x++) {
@@ -160,7 +160,7 @@ public class WordSearch{
     private void addAllWords () {
       int fails = 0;
       int i = 0;
-      while (fails < 10000 && wordsToAdd.size () > 0) {
+      while (fails < 1000000 && wordsToAdd.size () > 0) {
         String now = wordsToAdd.get (i);
         if (now.length () == 0) {
           i += 1;
@@ -179,20 +179,6 @@ public class WordSearch{
           //i += 1;
         }
       }
-      /*
-      while (fails < 1000) {
-        for (int x = 0; x < wordsToAdd.size (); x ++ ) {
-          String now = wordsToAdd.get (x);
-          if (! (addWord (now, randRow, randCol, rowInc, colInc))) {
-            fails += 1;
-          }
-          else {
-            addWord (now,randRow, randCol, rowInc, colInc);
-            wordsAdded.add (now);
-          }
-        }
-      }
-      */
     }
 
 
@@ -356,15 +342,13 @@ public class WordSearch{
     catch (FileNotFoundException e) {
       System.out.println ("File " + args[2] + " not found");
     }
-    /*
-    try {
-      WordSearch test = new WordSearch (10, 10 ,"words.txt");
-      System.out.println (test.toString());
-    }
-    catch (FileNotFoundException e) {
-      System.out.println ("File not found");
-    }
-    */
   }
 
 }
+
+//testing 0 constructors
+// testing 0 methods
+// checking only through command line arguments
+// write one constructor
+  // so if one is not provided, you can set it in the main
+//data = new [][] --> clear () --> randGen = new Random (seed) --> wordsToAdd = getWord (filename) --> addAllWords(); --> if (!key) { fillRandomLetters()};
