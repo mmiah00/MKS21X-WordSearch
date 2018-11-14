@@ -13,26 +13,26 @@ public class WordSearch{
     private ArrayList<String>wordsAdded; //all words that were successfully added get moved into wordsAdded.
 
     public WordSearch (int rows, int cols, String fileName) throws FileNotFoundException {
-      data = new char [rows][cols];
-      clear ();
-      Random r = new Random ();
-      seed = r.nextInt () % 1000;
-      randgen = new Random (seed);
-      wordsToAdd = new ArrayList<String> ();
-      wordsAdded = new ArrayList<String> ();
-      File f = new File (fileName);
-      Scanner in = new Scanner (f);
-      while (in.hasNext ()) {
-        String word = in.next ();
-        wordsToAdd.add (word);
-      }
-      addAllWords ();
-      addRandomLetters ();
+          data = new char [rows][cols];
+          clear ();
+          Random r = new Random ();
+          seed = r.nextInt () % 1000;
+          randgen = new Random (seed);
+          wordsToAdd = new ArrayList<String> ();
+          wordsAdded = new ArrayList<String> ();
+          File f = new File (fileName);
+          Scanner in = new Scanner (f);
+          while (in.hasNext ()) {
+            String word = in.next ();
+            wordsToAdd.add (word);
+          }
+          addAllWords ();
+          addRandomLetters ();
     }
 
     public WordSearch (int rows, int cols, String filename, int randSeed) throws FileNotFoundException {
       data = new char [rows][cols];
-      //clear ();
+      clear ();
       seed = randSeed;
       randgen = new Random (seed);
       wordsToAdd = new ArrayList<String> ();
@@ -324,6 +324,10 @@ public class WordSearch{
   }
   */
   //**********************************************************************************************************************\\
+  public static void instructions () {
+    System.out.println ("Welcome! \n Please enter the following parameters \n \t ~Rows: The numbers of rows you want your word search to be \n\t ~Columns: The nums of columns you want your essay to be. \n\t ~Filename: The name of the plain text file that contains the words. \n\t ~RandomSeed: Forces the same puzzle to occur again (optional) \n\t ~Key?: write key for the answers to appear (optional) \n\n\t ~If you write key you must also add a seed");
+  }
+
   public static void main(String[] args) {
     WordSearch test;
     try {
@@ -336,7 +340,7 @@ public class WordSearch{
         System.out.println (test);
       }
       if (args.length < 3) {
-        System.out.println ("Add parameters. They should include:  \n\t ~Number of Rows \n\t ~Number of Columns \n\t ~Filename \n\t ~seed [OPTIONAL]");
+        instructions ();
       }
     }
     catch (FileNotFoundException e) {
