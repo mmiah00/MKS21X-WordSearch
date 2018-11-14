@@ -11,7 +11,26 @@ public class WordSearch{
     private Random randgen;     //a random Object to unify your random calls
     private ArrayList<String>wordsToAdd; //all words from a text file get added to wordsToAdd, indicating that they have not yet been added
     private ArrayList<String>wordsAdded; //all words that were successfully added get moved into wordsAdded.
+    private boolean key;
 
+    public WordSearch (int rows, int cols, String fileName, int randSeed, boolean k) {
+      data = new [rows][cols];
+      clear ();
+      randGen = new Random (seed);
+      wordsToAdd = new ArrayList<String> ();
+      wordsAdded = new ArrayList<String> ();
+      File f = new File (fileName);
+      Scanner in = new Scanner (f);
+      while (in.hasNext ()) {
+        String word = in.next ();
+        wordsToAdd.add (word);
+      }
+      addAllWords();
+      if (!key) {
+        addRandomLetters();
+      }
+    }
+/*
     public WordSearch (int rows, int cols, String fileName) throws FileNotFoundException {
           data = new char [rows][cols];
           clear ();
@@ -45,6 +64,8 @@ public class WordSearch{
       }
       addAllWords ();
     }
+*/
+
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
       for (int x = 0; x < data.length; x ++) {
@@ -332,6 +353,7 @@ public class WordSearch{
     WordSearch test;
     try {
       if (args.length == 3) {
+        key = false;
         test = new WordSearch (Integer.parseInt (args [0]), Integer.parseInt (args [1]), args [2]);
         System.out.println (test);
       }
