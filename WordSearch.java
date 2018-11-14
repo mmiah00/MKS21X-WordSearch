@@ -353,8 +353,10 @@ public class WordSearch{
     WordSearch test;
     try {
       if (args.length == 3) {
-        key = false;
-        test = new WordSearch (Integer.parseInt (args [0]), Integer.parseInt (args [1]), args [2]);
+        myrandgen = new Random ();
+        myseed = randgen.nextInt () % 1000;
+        kee = false;
+        test = new WordSearch (Integer.parseInt (args [0]), Integer.parseInt (args [1]), args [2], myseed, kee);
         System.out.println (test);
       }
       if (args.length == 4) {
