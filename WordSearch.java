@@ -27,45 +27,10 @@ public class WordSearch{
         wordsToAdd.add (word);
       }
       addAllWords();
-      if (key == false) {
+      if (k == false) {
         addRandomLetters();
       }
     }
-/*
-    public WordSearch (int rows, int cols, String fileName) throws FileNotFoundException {
-          data = new char [rows][cols];
-          clear ();
-          Random r = new Random ();
-          seed = r.nextInt () % 1000;
-          randgen = new Random (seed);
-          wordsToAdd = new ArrayList<String> ();
-          wordsAdded = new ArrayList<String> ();
-          File f = new File (fileName);
-          Scanner in = new Scanner (f);
-          while (in.hasNext ()) {
-            String word = in.next ();
-            wordsToAdd.add (word);
-          }
-          addAllWords ();
-          addRandomLetters ();
-    }
-
-    public WordSearch (int rows, int cols, String filename, int randSeed) throws FileNotFoundException {
-      data = new char [rows][cols];
-      clear ();
-      seed = randSeed;
-      randgen = new Random (seed);
-      wordsToAdd = new ArrayList<String> ();
-      wordsAdded = new ArrayList<String> ();
-      File f = new File (filename);
-      Scanner in = new Scanner (f);
-      while (in.hasNext ()) {
-        String word = in.next ();
-        wordsToAdd.add (word);
-      }
-      addAllWords ();
-    }
-*/
 
     /**Set all values in the WordSearch to underscores'_'*/
     private void clear(){
@@ -105,7 +70,7 @@ public class WordSearch{
           }
           ans += data[x][y] + " ";
           if (y == data[x].length - 1) {
-            ans += " | \n";
+            ans += " |\n";
           }
         }
       }
@@ -203,12 +168,6 @@ public class WordSearch{
       }
     }
 
-
-
-
-
-
-
     //****************************************NOT USED BUT JUST KEEPING IT IN CASE ************************************************\\`
 
     /**Attempts to add a given word to the specified position of the WordGrid.
@@ -240,7 +199,6 @@ public class WordSearch{
       return true;
     }
 
-
    /**Attempts to add a given word to the specified position of the WordGrid.
      *The word is added from top to bottom, must fit on the WordGrid, and must
      *have a corresponding letter to match any letters that it overlaps.
@@ -252,7 +210,6 @@ public class WordSearch{
      *or there are overlapping letters that do not match, then false is returned.
      *and the board is NOT modified.
      */
-
 
     public boolean addWordVertical(String word,int row, int col){
       if (row + word.length () > data.length - 1) {
@@ -271,7 +228,6 @@ public class WordSearch{
       return true;
     }
 
-
     /**Attempts to add a given word to the specified position of the WordGrid.
       *The word is added from top left to bottom right, must fit on the WordGrid,
       *and must have a corresponding letter to match any letters that it overlaps.
@@ -282,7 +238,6 @@ public class WordSearch{
       *@return true when the word is added successfully. When the word doesn't fit,
       *or there are overlapping letters that do not match, then false is returned.
       */
-
 
    public boolean addWordDiagonal(String word,int row, int col){
      int x = col;
@@ -359,7 +314,6 @@ public class WordSearch{
         String thefile = args [2];
         Random myrandgen = new Random ();
         int myseed = myrandgen.nextInt () % 1000;
-        //System.out.println (myseed);
         boolean kee = false;
         test = new WordSearch (numrow, numcol, thefile, myseed, kee);
         System.out.println (test);
@@ -397,6 +351,42 @@ public class WordSearch{
   }
 
 }
+
+/*
+    public WordSearch (int rows, int cols, String fileName) throws FileNotFoundException {
+          data = new char [rows][cols];
+          clear ();
+          Random r = new Random ();
+          seed = r.nextInt () % 1000;
+          randgen = new Random (seed);
+          wordsToAdd = new ArrayList<String> ();
+          wordsAdded = new ArrayList<String> ();
+          File f = new File (fileName);
+          Scanner in = new Scanner (f);
+          while (in.hasNext ()) {
+            String word = in.next ();
+            wordsToAdd.add (word);
+          }
+          addAllWords ();
+          addRandomLetters ();
+    }
+
+    public WordSearch (int rows, int cols, String filename, int randSeed) throws FileNotFoundException {
+      data = new char [rows][cols];
+      clear ();
+      seed = randSeed;
+      randgen = new Random (seed);
+      wordsToAdd = new ArrayList<String> ();
+      wordsAdded = new ArrayList<String> ();
+      File f = new File (filename);
+      Scanner in = new Scanner (f);
+      while (in.hasNext ()) {
+        String word = in.next ();
+        wordsToAdd.add (word);
+      }
+      addAllWords ();
+    }
+*/
 
 //testing 0 constructors
 // testing 0 methods
