@@ -337,7 +337,6 @@ public class WordSearch{
           kee = true;
         }
         else { kee = false; }
-        System.out.println (kee);
         test = new WordSearch (numrow, numcol, thefile, theseed, kee);
         System.out.println (test);
       }
@@ -347,6 +346,9 @@ public class WordSearch{
     }
     catch (FileNotFoundException e) {
       System.out.println ("File " + args[2] + " not found");
+    }
+    catch (NumberFormatException e) {
+      System.out.println ("Please write a number"); 
     }
   }
 
