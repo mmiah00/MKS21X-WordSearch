@@ -16,6 +16,7 @@ public class WordSearch{
     public WordSearch (int rows, int cols, String fileName, int randSeed, boolean k) throws FileNotFoundException {
       data = new char[rows][cols];
       clear ();
+      seed = randSeed;
       randgen = new Random (seed);
       wordsToAdd = new ArrayList<String> ();
       wordsAdded = new ArrayList<String> ();
@@ -26,7 +27,7 @@ public class WordSearch{
         wordsToAdd.add (word);
       }
       addAllWords();
-      if (!key) {
+      if (key == false) {
         addRandomLetters();
       }
     }
@@ -358,6 +359,7 @@ public class WordSearch{
         String thefile = args [2];
         Random myrandgen = new Random ();
         int myseed = myrandgen.nextInt () % 1000;
+        //System.out.println (myseed);
         boolean kee = false;
         test = new WordSearch (numrow, numcol, thefile, myseed, kee);
         System.out.println (test);
@@ -377,10 +379,11 @@ public class WordSearch{
         String thefile = args [2];
         int theseed = Integer.parseInt (args[3]);
         boolean kee;
-        if (args [4] == "key") {
+        if (args [4].equals ("key")) {
           kee = true;
         }
         else { kee = false; }
+        System.out.println (kee);
         test = new WordSearch (numrow, numcol, thefile, theseed, kee);
         System.out.println (test);
       }
