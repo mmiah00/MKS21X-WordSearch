@@ -13,10 +13,10 @@ public class WordSearch{
     private ArrayList<String>wordsAdded; //all words that were successfully added get moved into wordsAdded.
     private boolean key;
 
-    public WordSearch (int rows, int cols, String fileName, int randSeed, boolean k) {
-      data = new [rows][cols];
+    public WordSearch (int rows, int cols, String fileName, int randSeed, boolean k) throws FileNotFoundException {
+      data = new char[rows][cols];
       clear ();
-      randGen = new Random (seed);
+      randgen = new Random (seed);
       wordsToAdd = new ArrayList<String> ();
       wordsAdded = new ArrayList<String> ();
       File f = new File (fileName);
@@ -70,7 +70,7 @@ public class WordSearch{
     private void clear(){
       for (int x = 0; x < data.length; x ++) {
         for (int y = 0; y < data[x].length; y ++) {
-          data[x][y] = '_';
+          data[x][y] = ' ';
         }
       }
     }
@@ -83,7 +83,7 @@ public class WordSearch{
 
       for (int x = 0; x < data.length; x++) {
         for (int y = 0; y < data[x].length; y++) {
-          if (data[x][y] == '_') {
+          if (data[x][y] == ' ') {
             int z = (randgen.nextInt(26));
             data[x][y] = a[z];
           }
@@ -132,7 +132,7 @@ public class WordSearch{
        int y = r;
        for (int i = 0; i < word.length () ; i ++ ) {
          char l = word.charAt (i);
-         if (data[y][x] != l && data[y][x] != '_') {
+         if (data[y][x] != l && data[y][x] != ' ') {
            return false;
          }
          x += colIncrement;
@@ -353,14 +353,35 @@ public class WordSearch{
     WordSearch test;
     try {
       if (args.length == 3) {
-        myrandgen = new Random ();
-        myseed = randgen.nextInt () % 1000;
-        kee = false;
-        test = new WordSearch (Integer.parseInt (args [0]), Integer.parseInt (args [1]), args [2], myseed, kee);
+        int numrow = Integer.parseInt (args[0]);
+        int numcol = Integer.parseInt (args[1]);
+        String thefile = args [2];
+        Random myrandgen = new Random ();
+        int myseed = myrandgen.nextInt () % 1000;
+        boolean kee = false;
+        test = new WordSearch (numrow, numcol, thefile, myseed, kee);
         System.out.println (test);
       }
       if (args.length == 4) {
-        test = new WordSearch (Integer.parseInt (args [0]), Integer.parseInt (args [1]), args [2], Integer.parseInt (args [3]));
+        int numrow = Integer.parseInt (args[0]);
+        int numcol = Integer.parseInt (args[1]);
+        String thefile = args [2];
+        int theseed = Integer.parseInt (args[3]);
+        boolean kee = false;
+        test = new WordSearch (numrow, numcol, thefile, theseed, kee);
+        System.out.println (test);
+      }
+      if (args.length == 5) {
+        int numrow = Integer.parseInt (args[0]);
+        int numcol = Integer.parseInt (args[1]);
+        String thefile = args [2];
+        int theseed = Integer.parseInt (args[3]);
+        boolean kee;
+        if (args [4] == "key") {
+          kee = true;
+        }
+        else { kee = false; }
+        test = new WordSearch (numrow, numcol, thefile, theseed, kee);
         System.out.println (test);
       }
       if (args.length < 3) {
