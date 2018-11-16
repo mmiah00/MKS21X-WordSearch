@@ -147,7 +147,7 @@ public class WordSearch{
     private void addAllWords () {
       int fails = 0;
       int i = 0;
-      while (fails < 1000000 && wordsToAdd.size () > 0) {
+      while (fails < 1000 && wordsToAdd.size () > 0) {
         String now = wordsToAdd.get (i);
         if (now.length () == 0) {
           i += 1;
@@ -156,6 +156,7 @@ public class WordSearch{
         int randCol = Math.abs (randgen.nextInt () % data[0].length);
         int rowInc = (randgen.nextInt (3)) - 1;
         int colInc = (randgen.nextInt (3)) - 1;
+        //pick word, pick direction
         if (! (fits (now, randRow, randCol, rowInc, colInc))) {
           fails += 1;
         }
@@ -323,9 +324,19 @@ public class WordSearch{
         int numcol = Integer.parseInt (args[1]);
         String thefile = args [2];
         int theseed = Integer.parseInt (args[3]);
-        boolean kee = false;
-        test = new WordSearch (numrow, numcol, thefile, theseed, kee);
-        System.out.println (test);
+        if (theseed > 10000) {
+          System.out.println ("Seed cannot be greater than 10000");
+        }
+        else {
+          if (theseed < 0 ) {
+            System.out.println ("Seed cannot be less than 0");
+          }
+          else {
+            boolean kee = false;
+            test = new WordSearch (numrow, numcol, thefile, theseed, kee);
+            System.out.println (test);
+          }
+        }
       }
       if (args.length == 5) {
         int numrow = Integer.parseInt (args[0]);
@@ -333,7 +344,7 @@ public class WordSearch{
         String thefile = args [2];
         int theseed = Integer.parseInt (args[3]);
         boolean kee;
-        if (args [4].equals ("key")) {
+        if (args [4].equals ("answers")) {
           kee = true;
         }
         else { kee = false; }
@@ -348,7 +359,10 @@ public class WordSearch{
       System.out.println ("File " + args[2] + " not found");
     }
     catch (NumberFormatException e) {
-      System.out.println ("Please write a number"); 
+      System.out.println ("Please write a number");
+    }
+    catch (NegativeArraySizeException e) {
+      System.out.println ("Your number of columns/rows must be greater than 0");
     }
   }
 
