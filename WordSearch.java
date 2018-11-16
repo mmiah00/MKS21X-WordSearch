@@ -147,6 +147,8 @@ public class WordSearch{
     private void addAllWords () {
       int fails = 0;
       int i = 0;
+      int rowInc = (randgen.nextInt (3)) - 1;
+      int colInc = (randgen.nextInt (3)) - 1;
       while (fails < 1000 && wordsToAdd.size () > 0) {
         String now = wordsToAdd.get (i);
         if (now.length () == 0) {
@@ -154,8 +156,6 @@ public class WordSearch{
         }
         int randRow = Math.abs (randgen.nextInt () % data.length);
         int randCol = Math.abs (randgen.nextInt () % data[0].length);
-        int rowInc = (randgen.nextInt (3)) - 1;
-        int colInc = (randgen.nextInt (3)) - 1;
         //pick word, pick direction
         if (! (fits (now, randRow, randCol, rowInc, colInc))) {
           fails += 1;
@@ -344,7 +344,7 @@ public class WordSearch{
         String thefile = args [2];
         int theseed = Integer.parseInt (args[3]);
         boolean kee;
-        if (args [4].equals ("answers")) {
+        if (args [4].equals ("key")) {
           kee = true;
         }
         else { kee = false; }
