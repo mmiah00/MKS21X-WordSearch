@@ -344,7 +344,7 @@ public class WordSearch{
         String thefile = args [2];
         int theseed = Integer.parseInt (args[3]);
         boolean kee;
-        if (args [4].equals ("key")) {
+        if (args [4].equals ("answers")) {
           kee = true;
         }
         else { kee = false; }
