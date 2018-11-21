@@ -55,7 +55,7 @@ public class WordSearch{
           }
         }
       }
-      }
+    }
 
     /**Each row is a new line, there is a space between each letter
      *@return a String with each character separated by spaces, and rows
@@ -146,16 +146,14 @@ public class WordSearch{
 
     private void addAllWords () {
       int fails = 0;
-      int i = 0;
-      int rowInc = (randgen.nextInt (3)) - 1;
-      int colInc = (randgen.nextInt (3)) - 1;
-      while (fails < 1000 && wordsToAdd.size () > 0) {
+      //int i = 0;
+      while (fails < 100 && wordsToAdd.size () > 0) {
+        int i = Math.abs (randgen.nextInt () % wordsToAdd.size ());
         String now = wordsToAdd.get (i);
-        if (now.length () == 0) {
-          i += 1;
-        }
         int randRow = Math.abs (randgen.nextInt () % data.length);
         int randCol = Math.abs (randgen.nextInt () % data[0].length);
+        int rowInc = (randgen.nextInt (3)) - 1;
+        int colInc = (randgen.nextInt (3)) - 1;
         //pick word, pick direction
         if (! (fits (now, randRow, randCol, rowInc, colInc))) {
           fails += 1;
